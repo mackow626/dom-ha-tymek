@@ -135,10 +135,11 @@ def light(entity, name, color="amber"):
             }}
 
 
-def cover(entity, name, wide=False):
+def cover(entity, name, wide=False, position=True):
+    features = [{"type": "cover-open-close"}] + ([{"type": "cover-position"}] if position else [])
     return {"type": "tile", "entity": entity, "name": name,
             "tap_action": {"action": "more-info"},
-            "features": [{"type": "cover-open-close"}, {"type": "cover-position"}],
+            "features": features,
             "features_position": "bottom",
             "grid_options": {"columns": 12 if wide else 6}}
 
@@ -212,7 +213,7 @@ def view_przeglad():
                    "vertical": True} for e, n in ALARMY],
                 {"type": "tile", "entity": "binary_sensor.brama_otwarta", "name": "Brama",
                  "grid_options": {"columns": 12}},
-                cover("cover.brama", "Sterowanie bramą", wide=True),
+                cover("cover.brama", "Sterowanie bramą", wide=True, position=False),
             ]},
             {"type": "grid", "cards": [
                 heading("Szybkie akcje", "mdi:lightning-bolt"),
@@ -267,7 +268,7 @@ def view_rolety():
             ]},
             {"type": "grid", "cards": [
                 heading("Brama", "mdi:gate"),
-                cover("cover.brama", "Brama", wide=True),
+                cover("cover.brama", "Brama", wide=True, position=False),
                 {"type": "tile", "entity": "binary_sensor.brama_otwarta", "name": "Czujnik bramy",
                  "grid_options": {"columns": 12}},
             ]},
