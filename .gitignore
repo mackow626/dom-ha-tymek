@@ -1,0 +1,30 @@
+# Sekrety – nigdy do repozytorium
+.env
+.env.*
+!.env.example
+
+# Stan nowego HA (tokeny, użytkownicy, baza, logi) – przenosisz go ręcznie, nie przez git
+config/*
+!config/configuration.yaml
+!config/automations.yaml
+!config/scripts.yaml
+!config/scenes.yaml
+!config/packages/
+# Własne dodatki do dashboardu (bez zewnętrznych zależności)
+!config/www/
+# Dashboardy (bez sekretów) – edytowane w UI, zapisywane w .storage
+!config/.storage/
+config/.storage/*
+!config/.storage/lovelace_dashboards
+!config/.storage/lovelace_resources
+# Domyślny dashboard (DOM) – bez sekretów
+!config/.storage/frontend.system_data
+!config/.storage/lovelace.*
+
+# Lokalne kopie i śmieci
+backup-*/
+*.zip
+.DS_Store
+__pycache__/
+*.przed-*
+*.bak-*

@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "frontend.system_data",
+  "data": {
+    "core": {
+      "onboarded_version": "2026.10.1",
+      "onboarded_date": "2026-10-12T19:53:26.871Z",
+      "default_panel": "dashboard-dom"
+    }
+  }
+}

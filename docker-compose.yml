@@ -1,0 +1,42 @@
+# Nowy HA + most ze starym HA (0.118.5).
+# Czujniki: tylko odczyt. Sterowanie: tylko encje z CLIMATE_CONTROL, SWITCH_CONTROL, COVER_CONTROL (.env).
+x-logging: &logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "3"
+
+services:
+  homeassistant:
+    container_name: ha-test
+    image: ghcr.io/home-assistant/home-assistant:stable
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - ./config:/config
+    environment:
+      - TZ=Europe/Warsaw
+    logging: *logging
+
+  mosquitto:
+    container_name: ha-mqtt
+    image: eclipse-mosquitto:2
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+    logging: *logging
+
+  bridge:
+    container_name: ha-bridge
+    build: ./bridge
+    restart: unless-stopped
+    network_mode: host
+    env_file: .env
+    environment:
+      - NEW_HA_URL=http://127.0.0.1:8123
+      - MQTT_HOST=127.0.0.1
+    depends_on:
+      - homeassistant
+      - mosquitto
+    logging: *logging

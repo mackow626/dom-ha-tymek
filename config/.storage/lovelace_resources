@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "lovelace_resources",
+  "data": {
+    "items": [
+      {
+        "id": "a8a92644cb404ff89dd6bc6c7e700088",
+        "url": "/local/dom-kafelek.js?v=1.0.0",
+        "type": "module"
+      }
+    ]
+  }
+}

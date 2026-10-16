@@ -1,0 +1,86 @@
+# Skróty na dashboardzie: jedno kliknięcie zamiast kilkunastu.
+script:
+  wylacz_wszystkie_swiatla:
+    alias: "Wyłącz wszystkie światła"
+    icon: mdi:lightbulb-group-off
+    mode: single
+    sequence:
+      - action: switch.turn_off
+        target:
+          entity_id: >-
+            {{ states.switch
+               | rejectattr('entity_id', 'search', 'ogrzewanie|gniazdko')
+               | selectattr('state', 'eq', 'on')
+               | map(attribute='entity_id') | list }}
+
+  zamknij_wszystkie_rolety:
+    alias: "Zamknij wszystkie rolety"
+    icon: mdi:window-shutter
+    mode: single
+    sequence:
+      - action: cover.close_cover
+        target:
+          entity_id: >-
+            {{ states.cover
+               | rejectattr('entity_id', 'search', 'brama')
+               | map(attribute='entity_id') | list }}
+
+  otworz_wszystkie_rolety:
+    alias: "Otwórz wszystkie rolety"
+    icon: mdi:window-shutter-open
+    mode: single
+    sequence:
+      - action: cover.open_cover
+        target:
+          entity_id: >-
+            {{ states.cover
+               | rejectattr('entity_id', 'search', 'brama')
+               | map(attribute='entity_id') | list }}
+
+  zgas_swiatla:
+    alias: "Zgaś światła w strefie"
+    icon: mdi:lightbulb-off
+    mode: parallel
+    fields:
+      strefa:
+        description: "parter, pietro albo zewnatrz"
+        example: parter
+    sequence:
+      - action: switch.turn_off
+        target:
+          entity_id: >-
+            {% set wl = states.switch | selectattr('state', 'eq', 'on')
+                 | rejectattr('object_id', 'search', '^(ogrzewanie|gniazdko)') | list %}
+            {% if strefa == 'pietro' %}
+              {{ wl | selectattr('object_id', 'search', '^p1_') | map(attribute='entity_id') | list }}
+            {% elif strefa == 'zewnatrz' %}
+              {{ wl | selectattr('object_id', 'search', '^(przed_wejsciem|balkon|pergola)') | map(attribute='entity_id') | list }}
+            {% else %}
+              {{ wl | rejectattr('object_id', 'search', '^(p1_|przed_wejsciem|balkon|pergola|gniazdko)') | map(attribute='entity_id') | list }}
+            {% endif %}
+
+# Liczniki włączonych świateł na piętrach (do nagłówków na dashboardzie).
+template:
+  - sensor:
+      - name: "Światła parter"
+        unique_id: dom_swiatla_parter
+        icon: mdi:home-floor-0
+        unit_of_measurement: "wł."
+        state: >-
+          {{ states.switch | selectattr('state', 'eq', 'on')
+             | rejectattr('object_id', 'search', '^(p1_|ogrzewanie|gniazdko|przed_wejsciem|balkon|pergola)')
+             | list | count }}
+      - name: "Światła piętro"
+        unique_id: dom_swiatla_pietro
+        icon: mdi:home-floor-1
+        unit_of_measurement: "wł."
+        state: >-
+          {{ states.switch | selectattr('state', 'eq', 'on')
+             | selectattr('object_id', 'search', '^p1_') | list | count }}
+      - name: "Światła na zewnątrz"
+        unique_id: dom_swiatla_zewnatrz
+        icon: mdi:tree
+        unit_of_measurement: "wł."
+        state: >-
+          {{ states.switch | selectattr('state', 'eq', 'on')
+             | selectattr('object_id', 'search', '^(przed_wejsciem|balkon|pergola)') | list | count }}

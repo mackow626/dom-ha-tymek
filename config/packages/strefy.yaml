@@ -1,0 +1,98 @@
+# Strefy: jeden suwak ustawia temperaturę na wszystkich termostatach w strefie.
+input_number:
+  temperatura_parter:
+    name: "Temperatura – parter"
+    min: 16
+    max: 28
+    step: 0.5
+    unit_of_measurement: "°C"
+    mode: slider
+    icon: mdi:home-floor-0
+  temperatura_pietro:
+    name: "Temperatura – piętro"
+    min: 16
+    max: 28
+    step: 0.5
+    unit_of_measurement: "°C"
+    mode: slider
+    icon: mdi:home-floor-1
+  temperatura_dom:
+    name: "Temperatura – cały dom"
+    min: 16
+    max: 28
+    step: 0.5
+    unit_of_measurement: "°C"
+    mode: slider
+    icon: mdi:home-thermometer
+
+automation:
+  - id: dom_temperatura_parter
+    alias: "Ustaw temperaturę na parterze"
+    mode: restart
+    trigger:
+      - trigger: state
+        entity_id: input_number.temperatura_parter
+    condition:
+      - condition: template
+        value_template: "{{ trigger.to_state.state not in ['unknown', 'unavailable'] }}"
+    action:
+      - delay: 2
+      - action: climate.set_temperature
+        target:
+          entity_id:
+            - climate.ogrzewanie_salon
+            - climate.ogrzewanie_kuchnia
+            - climate.ogrzewanie_pokoj
+            - climate.ogrzewanie_wc
+            - climate.ogrzewanie_wiatrolap
+        data:
+          temperature: "{{ states('input_number.temperatura_parter') | float }}"
+  - id: dom_temperatura_pietro
+    alias: "Ustaw temperaturę na piętrze"
+    mode: restart
+    trigger:
+      - trigger: state
+        entity_id: input_number.temperatura_pietro
+    condition:
+      - condition: template
+        value_template: "{{ trigger.to_state.state not in ['unknown', 'unavailable'] }}"
+    action:
+      - delay: 2
+      - action: climate.set_temperature
+        target:
+          entity_id:
+            - climate.ogrzewanie_p1_pokoj_1
+            - climate.ogrzewanie_p1_pokoj_2
+            - climate.ogrzewanie_p1_pokoj_3
+            - climate.ogrzewanie_p1_pokoj_4
+            - climate.ogrzewanie_p1_lazienka_1
+            - climate.ogrzewanie_p1_lazienka_2
+        data:
+          temperature: "{{ states('input_number.temperatura_pietro') | float }}"
+  - id: dom_temperatura_dom
+    alias: "Ustaw temperaturę w całym domu"
+    mode: restart
+    trigger:
+      - trigger: state
+        entity_id: input_number.temperatura_dom
+    condition:
+      - condition: template
+        value_template: "{{ trigger.to_state.state not in ['unknown', 'unavailable'] }}"
+    action:
+      - delay: 2
+      - action: climate.set_temperature
+        target:
+          entity_id:
+            - climate.ogrzewanie_salon
+            - climate.ogrzewanie_kuchnia
+            - climate.ogrzewanie_pokoj
+            - climate.ogrzewanie_wc
+            - climate.ogrzewanie_wiatrolap
+            - climate.ogrzewanie_p1_pokoj_1
+            - climate.ogrzewanie_p1_pokoj_2
+            - climate.ogrzewanie_p1_pokoj_3
+            - climate.ogrzewanie_p1_pokoj_4
+            - climate.ogrzewanie_p1_lazienka_1
+            - climate.ogrzewanie_p1_lazienka_2
+        data:
+          temperature: "{{ states('input_number.temperatura_dom') | float }}"

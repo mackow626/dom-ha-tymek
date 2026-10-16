@@ -1,0 +1,183 @@
+# Powiadomienia na telefon: alarmy (pożar, zalanie) i brama.
+#
+# Czujnik bramy w starym HA działa odwrotnie: binary_sensor.brama "on" = zamknięta, "off" = otwarta
+# (sprawdzone w historii: "off" trwa tyle, ile przejazd). Dlatego poniżej jest poprawiony czujnik
+# binary_sensor.brama_otwarta i to jego używają automatyzacje i dashboard.
+
+template:
+  - binary_sensor:
+      - name: "Brama otwarta"
+        unique_id: dom_brama_otwarta
+        device_class: opening
+        icon: >-
+          {{ "mdi:gate-open" if is_state("binary_sensor.dom_brama", "off") else "mdi:gate" }}
+        state: "{{ is_state('binary_sensor.dom_brama', 'off') }}"
+        availability: "{{ states('binary_sensor.dom_brama') in ['on', 'off'] }}"
+
+script:
+  dom_powiadom:
+    alias: "Wyślij powiadomienie na telefon"
+    mode: parallel
+    fields:
+      tytul: {description: "Tytuł"}
+      tresc: {description: "Treść"}
+      krytyczne: {description: "true = dźwięk mimo trybu cichego"}
+      akcje: {description: "Lista przycisków [{action, title}]"}
+      tag: {description: "Ten sam tag zastępuje poprzednie powiadomienie"}
+    sequence:
+      - action: notify.mobile_app_iphone_maciej_2
+        data:
+          title: "{{ tytul }}"
+          message: "{{ tresc }}"
+          data: >-
+            {% set d = {'tag': tag | default('dom'), 'url': '/dashboard-dom/przeglad'} %}
+            {% if akcje is defined and akcje %}{% set d = dict(d, actions=akcje) %}{% endif %}
+            {% if krytyczne | default(false) | bool %}
+              {% set d = dict(d, push={'sound': {'name': 'default', 'critical': 1, 'volume': 1.0}},
+                                 presentation_options=['alert', 'sound', 'badge']) %}
+            {% endif %}
+            {{ d }}
+      - action: persistent_notification.create
+        data:
+          title: "{{ tytul }}"
+          message: "{{ tresc }}"
+          notification_id: "{{ tag | default('dom') }}"
+
+  test_powiadomien:
+    alias: "Test powiadomień (zwykłe, bez dźwięku alarmu)"
+    icon: mdi:bell-check
+    sequence:
+      - action: script.dom_powiadom
+        data:
+          tytul: "Test powiadomień"
+          tresc: "Jeśli to widzisz, powiadomienia z nowego HA działają."
+          tag: dom_test
+
+automation:
+  # ---------- 1. Pożar i zalanie: alarm krytyczny ----------
+  - id: dom_alarm_pozar_zalanie
+    alias: "Alarm: pożar lub zalanie"
+    mode: parallel
+    trigger:
+      # 5 s – odfiltrowuje 3-sekundowe fałszywe sygnały czujników zalania
+      - trigger: state
+        entity_id: [binary_sensor.dom_pozar, binary_sensor.dom_woda_1, binary_sensor.dom_woda_2]
+        from: "off"
+        to: "on"
+        for: "00:00:05"
+    action:
+      - variables:
+          nazwa: >-
+            {{ {'binary_sensor.dom_pozar': 'POŻAR – czujnik dymu',
+                'binary_sensor.dom_woda_1': 'ZALANIE – czujnik 1',
+                'binary_sensor.dom_woda_2': 'ZALANIE – czujnik 2'}[trigger.entity_id] }}
+      - action: script.dom_powiadom
+        data:
+          tytul: "🚨 {{ nazwa }}"
+          tresc: "Czujnik zgłasza alarm od {{ now().strftime('%H:%M') }}. Sprawdź dom."
+          krytyczne: true
+          tag: "alarm_{{ trigger.entity_id.split('.')[1] }}"
+
+  - id: dom_alarm_koniec
+    alias: "Alarm: koniec (pożar lub zalanie)"
+    mode: parallel
+    trigger:
+      - trigger: state
+        entity_id: [binary_sensor.dom_pozar, binary_sensor.dom_woda_1, binary_sensor.dom_woda_2]
+        from: "on"
+        to: "off"
+        for: "00:00:30"
+    condition:
+      # tylko jeśli alarm faktycznie trwał (był dłużej niż 5 s i poszło powiadomienie)
+      - condition: template
+        value_template: "{{ (trigger.to_state.last_changed - trigger.from_state.last_changed).total_seconds() > 5 }}"
+    action:
+      - action: script.dom_powiadom
+        data:
+          tytul: "✅ Alarm ustał"
+          tresc: "{{ trigger.from_state.attributes.friendly_name }}: czujnik wrócił do normy."
+          tag: "alarm_{{ trigger.entity_id.split('.')[1] }}"
+
+  # ---------- 2. Brama otwarta za długo ----------
+  - id: dom_brama_otwarta_dlugo
+    alias: "Brama otwarta dłużej niż 10 minut"
+    mode: single
+    trigger:
+      - trigger: state
+        entity_id: binary_sensor.brama_otwarta
+        to: "on"
+        for: "00:10:00"
+    action:
+      - action: script.dom_powiadom
+        data:
+          tytul: "Brama jest otwarta"
+          tresc: "Brama jest otwarta od {{ ((now() - states.binary_sensor.brama_otwarta.last_changed).total_seconds() // 60) | int }} min."
+          tag: dom_brama
+          akcje:
+            - action: DOM_ZAMKNIJ_BRAME
+              title: "Zamknij bramę"
+              destructive: true
+            - action: DOM_BRAMA_OK
+              title: "Zostaw"
+
+  # ---------- 3. Brama otwarta o 23:00 ----------
+  - id: dom_brama_noc
+    alias: "Brama otwarta o 23:00"
+    mode: single
+    trigger:
+      - trigger: time
+        at: "23:00:00"
+    condition:
+      - condition: state
+        entity_id: binary_sensor.brama_otwarta
+        state: "on"
+    action:
+      - action: script.dom_powiadom
+        data:
+          tytul: "🌙 Brama na noc otwarta"
+          tresc: "Jest 23:00, a brama jest nadal otwarta."
+          tag: dom_brama
+          akcje:
+            - action: DOM_ZAMKNIJ_BRAME
+              title: "Zamknij bramę"
+              destructive: true
+            - action: DOM_BRAMA_OK
+              title: "Zostaw"
+
+  # ---------- przycisk „Zamknij bramę” z powiadomienia ----------
+  - id: dom_brama_zamknij_z_powiadomienia
+    alias: "Zamknij bramę (przycisk w powiadomieniu)"
+    mode: single
+    trigger:
+      - trigger: event
+        event_type: mobile_app_notification_action
+        event_data:
+          action: DOM_ZAMKNIJ_BRAME
+    action:
+      # Tylko gdy czujnik nadal pokazuje otwartą bramę – inaczej sterownik mógłby ją otworzyć.
+      - if:
+          - condition: state
+            entity_id: binary_sensor.brama_otwarta
+            state: "on"
+        then:
+          - action: cover.close_cover
+            target:
+              entity_id: cover.brama
+          - wait_for_trigger:
+              - trigger: state
+                entity_id: binary_sensor.brama_otwarta
+                to: "off"
+            timeout: "00:02:00"
+          - action: script.dom_powiadom
+            data:
+              tytul: "{{ 'Brama zamknięta' if wait.trigger else '⚠️ Brama się nie zamknęła' }}"
+              tresc: >-
+                {{ 'Czujnik potwierdził zamknięcie.' if wait.trigger
+                   else 'Po 2 minutach czujnik nadal pokazuje otwartą bramę. Sprawdź ją.' }}
+              tag: dom_brama
+        else:
+          - action: script.dom_powiadom
+            data:
+              tytul: "Brama już zamknięta"
+              tresc: "Czujnik pokazuje zamkniętą bramę – nic nie wysłano."
+              tag: dom_brama

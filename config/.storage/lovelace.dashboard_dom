@@ -1,0 +1,3274 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "lovelace.dashboard_dom",
+  "data": {
+    "config": {
+      "title": "Dom",
+      "views": [
+        {
+          "title": "Przegląd",
+          "path": "przeglad",
+          "icon": "mdi:home",
+          "type": "sections",
+          "max_columns": 3,
+          "badges": [
+            {
+              "type": "entity",
+              "entity": "binary_sensor.dom_pozar",
+              "name": "Pożar",
+              "show_name": true,
+              "show_state": true,
+              "show_icon": true,
+              "color": "red",
+              "visibility": [
+                {
+                  "condition": "state",
+                  "entity": "binary_sensor.dom_pozar",
+                  "state": "on"
+                }
+              ]
+            },
+            {
+              "type": "entity",
+              "entity": "binary_sensor.dom_woda_1",
+              "name": "Zalanie 1",
+              "show_name": true,
+              "show_state": true,
+              "show_icon": true,
+              "color": "red",
+              "visibility": [
+                {
+                  "condition": "state",
+                  "entity": "binary_sensor.dom_woda_1",
+                  "state": "on"
+                }
+              ]
+            },
+            {
+              "type": "entity",
+              "entity": "binary_sensor.dom_woda_2",
+              "name": "Zalanie 2",
+              "show_name": true,
+              "show_state": true,
+              "show_icon": true,
+              "color": "red",
+              "visibility": [
+                {
+                  "condition": "state",
+                  "entity": "binary_sensor.dom_woda_2",
+                  "state": "on"
+                }
+              ]
+            },
+            {
+              "type": "entity",
+              "entity": "binary_sensor.brama_otwarta",
+              "name": "Brama",
+              "show_name": true,
+              "show_state": true,
+              "show_icon": true
+            },
+            {
+              "type": "entity",
+              "entity": "sensor.dom_temperatura_salon",
+              "name": "Salon",
+              "show_name": true,
+              "show_state": true,
+              "show_icon": true
+            },
+            {
+              "type": "entity",
+              "entity": "sensor.dom_temperatura_p1_pokoj_1",
+              "name": "Maciek",
+              "show_name": true,
+              "show_state": true,
+              "show_icon": true
+            },
+            {
+              "type": "entity",
+              "entity": "sensor.dom_ls",
+              "name": "Światło",
+              "show_name": true,
+              "show_state": true,
+              "show_icon": true
+            }
+          ],
+          "sections": [
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Bezpieczeństwo",
+                  "heading_style": "title",
+                  "icon": "mdi:shield-home"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.dom_pozar",
+                  "name": "Pożar",
+                  "grid_options": {
+                    "columns": 4
+                  },
+                  "vertical": true
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.dom_woda_1",
+                  "name": "Zalanie 1",
+                  "grid_options": {
+                    "columns": 4
+                  },
+                  "vertical": true
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.dom_woda_2",
+                  "name": "Zalanie 2",
+                  "grid_options": {
+                    "columns": 4
+                  },
+                  "vertical": true
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.brama_otwarta",
+                  "name": "Brama",
+                  "grid_options": {
+                    "columns": 12
+                  }
+                },
+                {
+                  "type": "tile",
+                  "entity": "cover.brama",
+                  "name": "Sterowanie bramą",
+                  "tap_action": {
+                    "action": "more-info"
+                  },
+                  "features": [
+                    {
+                      "type": "cover-open-close"
+                    },
+                    {
+                      "type": "cover-position"
+                    }
+                  ],
+                  "features_position": "bottom",
+                  "grid_options": {
+                    "columns": 12
+                  }
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Szybkie akcje",
+                  "heading_style": "title",
+                  "icon": "mdi:lightning-bolt"
+                },
+                {
+                  "type": "button",
+                  "name": "Zgaś światła",
+                  "icon": "mdi:lightbulb-group-off",
+                  "show_state": false,
+                  "tap_action": {
+                    "action": "perform-action",
+                    "perform_action": "script.wylacz_wszystkie_swiatla",
+                    "confirmation": {
+                      "text": "Wyłączyć wszystkie światła w domu?"
+                    }
+                  },
+                  "grid_options": {
+                    "columns": 4,
+                    "rows": 2
+                  }
+                },
+                {
+                  "type": "button",
+                  "name": "Rolety w dół",
+                  "icon": "mdi:window-shutter",
+                  "show_state": false,
+                  "tap_action": {
+                    "action": "perform-action",
+                    "perform_action": "script.zamknij_wszystkie_rolety",
+                    "confirmation": {
+                      "text": "Zamknąć wszystkie rolety?"
+                    }
+                  },
+                  "grid_options": {
+                    "columns": 4,
+                    "rows": 2
+                  }
+                },
+                {
+                  "type": "button",
+                  "name": "Rolety w górę",
+                  "icon": "mdi:window-shutter-open",
+                  "show_state": false,
+                  "tap_action": {
+                    "action": "perform-action",
+                    "perform_action": "script.otworz_wszystkie_rolety",
+                    "confirmation": {
+                      "text": "Otworzyć wszystkie rolety?"
+                    }
+                  },
+                  "grid_options": {
+                    "columns": 4,
+                    "rows": 2
+                  }
+                },
+                {
+                  "type": "entity-filter",
+                  "entities": [
+                    {
+                      "entity": "switch.salon_1"
+                    },
+                    {
+                      "entity": "switch.salon_2"
+                    },
+                    {
+                      "entity": "switch.salon_3"
+                    },
+                    {
+                      "entity": "switch.salon_led3"
+                    },
+                    {
+                      "entity": "switch.kuchnia"
+                    },
+                    {
+                      "entity": "switch.kuchnia_2"
+                    },
+                    {
+                      "entity": "switch.jadalnia"
+                    },
+                    {
+                      "entity": "switch.pokoj_1_1"
+                    },
+                    {
+                      "entity": "switch.pokoj_1_2"
+                    },
+                    {
+                      "entity": "switch.pokoj_1_3"
+                    },
+                    {
+                      "entity": "switch.wiatrolap"
+                    },
+                    {
+                      "entity": "switch.korytarz"
+                    },
+                    {
+                      "entity": "switch.korytarz_2"
+                    },
+                    {
+                      "entity": "switch.schody"
+                    },
+                    {
+                      "entity": "switch.schowek"
+                    },
+                    {
+                      "entity": "switch.wc_2"
+                    },
+                    {
+                      "entity": "switch.wc_2_2"
+                    },
+                    {
+                      "entity": "switch.kotlownia"
+                    },
+                    {
+                      "entity": "switch.garaz_1"
+                    },
+                    {
+                      "entity": "switch.garaz_2"
+                    },
+                    {
+                      "entity": "switch.p1_pokoj_1_1"
+                    },
+                    {
+                      "entity": "switch.p1_pokoj_1_2"
+                    },
+                    {
+                      "entity": "switch.p1_pokoj_1_3"
+                    },
+                    {
+                      "entity": "switch.p1_pokoj_2_1"
+                    },
+                    {
+                      "entity": "switch.p1_pokoj_2_2"
+                    },
+                    {
+                      "entity": "switch.p1_pokoj_2_3"
+                    },
+                    {
+                      "entity": "switch.p1_pokoj_2_4"
+                    },
+                    {
+                      "entity": "switch.p1_pokoj_3_1"
+                    },
+                    {
+                      "entity": "switch.p1_pokoj_3_2"
+                    },
+                    {
+                      "entity": "switch.p1_pokoj_3_3"
+                    },
+                    {
+                      "entity": "switch.p1_pokoj_4_1"
+                    },
+                    {
+                      "entity": "switch.p1_pokoj_4_2"
+                    },
+                    {
+                      "entity": "switch.p1_pokoj_4_3"
+                    },
+                    {
+                      "entity": "switch.p1_lazienka_1_1"
+                    },
+                    {
+                      "entity": "switch.p1_lazienka_1_2"
+                    },
+                    {
+                      "entity": "switch.p1_lazienka_1_3"
+                    },
+                    {
+                      "entity": "switch.p1_lazienka_2_1"
+                    },
+                    {
+                      "entity": "switch.p1_lazienka_2_2"
+                    },
+                    {
+                      "entity": "switch.p1_lazienka_2_3"
+                    },
+                    {
+                      "entity": "switch.p1_lazienka_2_4"
+                    },
+                    {
+                      "entity": "switch.p1_lazienka_2_5"
+                    },
+                    {
+                      "entity": "switch.p1_korytarz_1"
+                    },
+                    {
+                      "entity": "switch.p1_korytarz_2"
+                    },
+                    {
+                      "entity": "switch.przed_wejsciem"
+                    },
+                    {
+                      "entity": "switch.balkon"
+                    },
+                    {
+                      "entity": "switch.pergola"
+                    },
+                    {
+                      "entity": "switch.pergola_led"
+                    }
+                  ],
+                  "conditions": [
+                    {
+                      "condition": "state",
+                      "state": "on"
+                    }
+                  ],
+                  "show_empty": true,
+                  "card": {
+                    "type": "entities",
+                    "title": "Włączone światła",
+                    "state_color": true
+                  }
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Temperatura",
+                  "heading_style": "title",
+                  "icon": "mdi:thermometer"
+                },
+                {
+                  "type": "glance",
+                  "title": "Parter",
+                  "columns": 3,
+                  "state_color": true,
+                  "entities": [
+                    {
+                      "entity": "sensor.dom_temperatura_salon",
+                      "name": "Salon"
+                    },
+                    {
+                      "entity": "sensor.dom_temperatura_kuchnia",
+                      "name": "Kuchnia"
+                    },
+                    {
+                      "entity": "sensor.dom_temperatura_pokoj",
+                      "name": "Siłownia"
+                    },
+                    {
+                      "entity": "sensor.dom_temperatura_wc",
+                      "name": "WC"
+                    },
+                    {
+                      "entity": "sensor.dom_temperatura_wiatrolap",
+                      "name": "Wiatrołap"
+                    }
+                  ]
+                },
+                {
+                  "type": "glance",
+                  "title": "Piętro",
+                  "columns": 3,
+                  "state_color": true,
+                  "entities": [
+                    {
+                      "entity": "sensor.dom_temperatura_p1_pokoj_1",
+                      "name": "Maciek"
+                    },
+                    {
+                      "entity": "sensor.dom_temperatura_p1_pokoj_2",
+                      "name": "Aga"
+                    },
+                    {
+                      "entity": "sensor.dom_temperatura_p1_pokoj_3",
+                      "name": "Emi"
+                    },
+                    {
+                      "entity": "sensor.dom_temperatura_p1_pokoj_4",
+                      "name": "Maja"
+                    },
+                    {
+                      "entity": "sensor.dom_temperatura_p1_lazienka_1",
+                      "name": "Łazienka sypialnia"
+                    },
+                    {
+                      "entity": "sensor.dom_temperatura_p1_lazienka_2",
+                      "name": "Duża łazienka"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Światła",
+          "path": "swiatla",
+          "icon": "mdi:lightbulb-group",
+          "type": "sections",
+          "max_columns": 4,
+          "dense_section_placement": false,
+          "sections": [
+            {
+              "type": "grid",
+              "column_span": 4,
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Parter",
+                  "icon": "mdi:home-floor-0",
+                  "heading_style": "title",
+                  "badges": [
+                    {
+                      "type": "entity",
+                      "entity": "sensor.swiatla_parter",
+                      "color": "amber",
+                      "show_icon": true,
+                      "show_state": true,
+                      "state_content": "state"
+                    },
+                    {
+                      "type": "entity",
+                      "entity": "script.zgas_swiatla",
+                      "name": "Zgaś",
+                      "show_name": true,
+                      "show_state": false,
+                      "icon": "mdi:lightbulb-off",
+                      "color": "amber",
+                      "tap_action": {
+                        "action": "perform-action",
+                        "perform_action": "script.zgas_swiatla",
+                        "data": {
+                          "strefa": "parter"
+                        },
+                        "confirmation": {
+                          "text": "Zgasić wszystkie światła: parter?"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "markdown",
+                  "text_only": true,
+                  "content": "Salon · Kuchnia i jadalnia · Siłownia · Korytarz i wejście · WC i kotłownia · Garaż"
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Salon",
+                  "heading_style": "title",
+                  "icon": "mdi:sofa"
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.salon_1",
+                    "name": "Światło 1",
+                    "vertical": false,
+                    "color": "amber",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.06)",
+                      "--state-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-off-color": "rgba(255, 193, 7, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.28)",
+                      "--ha-card-border-color": "rgba(255, 193, 7, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.salon_2",
+                    "name": "Światło 2",
+                    "vertical": false,
+                    "color": "amber",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.06)",
+                      "--state-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-off-color": "rgba(255, 193, 7, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.28)",
+                      "--ha-card-border-color": "rgba(255, 193, 7, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.salon_3",
+                    "name": "Światło 3",
+                    "vertical": false,
+                    "color": "amber",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.06)",
+                      "--state-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-off-color": "rgba(255, 193, 7, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.28)",
+                      "--ha-card-border-color": "rgba(255, 193, 7, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.salon_led3",
+                    "name": "LED",
+                    "vertical": false,
+                    "color": "amber",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.06)",
+                      "--state-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-off-color": "rgba(255, 193, 7, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.28)",
+                      "--ha-card-border-color": "rgba(255, 193, 7, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.gniazdko_salon_1",
+                    "name": "Gniazdko 1",
+                    "vertical": false,
+                    "color": "amber",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.06)",
+                      "--state-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-off-color": "rgba(255, 193, 7, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.28)",
+                      "--ha-card-border-color": "rgba(255, 193, 7, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.gniazdko_salon_2",
+                    "name": "Gniazdko 2",
+                    "vertical": false,
+                    "color": "amber",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.06)",
+                      "--state-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-off-color": "rgba(255, 193, 7, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.28)",
+                      "--ha-card-border-color": "rgba(255, 193, 7, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.gniazdko_salon_3",
+                    "name": "Gniazdko 3",
+                    "vertical": false,
+                    "color": "amber",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.06)",
+                      "--state-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-off-color": "rgba(255, 193, 7, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.28)",
+                      "--ha-card-border-color": "rgba(255, 193, 7, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Kuchnia i jadalnia",
+                  "heading_style": "title",
+                  "icon": "mdi:silverware-fork-knife"
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.kuchnia",
+                    "name": "Kuchnia 1",
+                    "vertical": false,
+                    "color": "amber",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.06)",
+                      "--state-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-off-color": "rgba(255, 193, 7, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.28)",
+                      "--ha-card-border-color": "rgba(255, 193, 7, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.kuchnia_2",
+                    "name": "Kuchnia 2",
+                    "vertical": false,
+                    "color": "amber",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.06)",
+                      "--state-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-off-color": "rgba(255, 193, 7, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.28)",
+                      "--ha-card-border-color": "rgba(255, 193, 7, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.jadalnia",
+                    "name": "Jadalnia",
+                    "vertical": false,
+                    "color": "amber",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.06)",
+                      "--state-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-off-color": "rgba(255, 193, 7, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.28)",
+                      "--ha-card-border-color": "rgba(255, 193, 7, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Siłownia",
+                  "heading_style": "title",
+                  "icon": "mdi:dumbbell"
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.pokoj_1_1",
+                    "name": "Światło 1",
+                    "vertical": false,
+                    "color": "amber",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.06)",
+                      "--state-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-off-color": "rgba(255, 193, 7, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.28)",
+                      "--ha-card-border-color": "rgba(255, 193, 7, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.pokoj_1_2",
+                    "name": "Światło 2",
+                    "vertical": false,
+                    "color": "amber",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.06)",
+                      "--state-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-off-color": "rgba(255, 193, 7, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.28)",
+                      "--ha-card-border-color": "rgba(255, 193, 7, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.pokoj_1_3",
+                    "name": "Światło 3",
+                    "vertical": false,
+                    "color": "amber",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.06)",
+                      "--state-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-off-color": "rgba(255, 193, 7, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.28)",
+                      "--ha-card-border-color": "rgba(255, 193, 7, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Korytarz i wejście",
+                  "heading_style": "title",
+                  "icon": "mdi:door"
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.wiatrolap",
+                    "name": "Wiatrołap",
+                    "vertical": false,
+                    "color": "amber",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.06)",
+                      "--state-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-off-color": "rgba(255, 193, 7, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.28)",
+                      "--ha-card-border-color": "rgba(255, 193, 7, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.korytarz",
+                    "name": "Korytarz 1",
+                    "vertical": false,
+                    "color": "amber",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.06)",
+                      "--state-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-off-color": "rgba(255, 193, 7, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.28)",
+                      "--ha-card-border-color": "rgba(255, 193, 7, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.korytarz_2",
+                    "name": "Korytarz 2",
+                    "vertical": false,
+                    "color": "amber",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.06)",
+                      "--state-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-off-color": "rgba(255, 193, 7, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.28)",
+                      "--ha-card-border-color": "rgba(255, 193, 7, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.schody",
+                    "name": "Schody",
+                    "vertical": false,
+                    "color": "amber",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.06)",
+                      "--state-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-off-color": "rgba(255, 193, 7, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.28)",
+                      "--ha-card-border-color": "rgba(255, 193, 7, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.schowek",
+                    "name": "Schowek",
+                    "vertical": false,
+                    "color": "amber",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.06)",
+                      "--state-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-off-color": "rgba(255, 193, 7, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.28)",
+                      "--ha-card-border-color": "rgba(255, 193, 7, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "WC i kotłownia",
+                  "heading_style": "title",
+                  "icon": "mdi:toilet"
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.wc_2",
+                    "name": "WC 1",
+                    "vertical": false,
+                    "color": "amber",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.06)",
+                      "--state-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-off-color": "rgba(255, 193, 7, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.28)",
+                      "--ha-card-border-color": "rgba(255, 193, 7, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.wc_2_2",
+                    "name": "WC 2",
+                    "vertical": false,
+                    "color": "amber",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.06)",
+                      "--state-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-off-color": "rgba(255, 193, 7, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.28)",
+                      "--ha-card-border-color": "rgba(255, 193, 7, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.kotlownia",
+                    "name": "Kotłownia",
+                    "vertical": false,
+                    "color": "amber",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.06)",
+                      "--state-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-off-color": "rgba(255, 193, 7, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.28)",
+                      "--ha-card-border-color": "rgba(255, 193, 7, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Garaż",
+                  "heading_style": "title",
+                  "icon": "mdi:garage"
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.garaz_1",
+                    "name": "Światło 1",
+                    "vertical": false,
+                    "color": "amber",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.06)",
+                      "--state-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-off-color": "rgba(255, 193, 7, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.28)",
+                      "--ha-card-border-color": "rgba(255, 193, 7, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.garaz_2",
+                    "name": "Światło 2",
+                    "vertical": false,
+                    "color": "amber",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.06)",
+                      "--state-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-inactive-color": "rgba(255, 193, 7, 0.55)",
+                      "--state-switch-off-color": "rgba(255, 193, 7, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(255, 193, 7, 0.28)",
+                      "--ha-card-border-color": "rgba(255, 193, 7, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "column_span": 4,
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Piętro",
+                  "icon": "mdi:home-floor-1",
+                  "heading_style": "title",
+                  "badges": [
+                    {
+                      "type": "entity",
+                      "entity": "sensor.swiatla_pietro",
+                      "color": "light-blue",
+                      "show_icon": true,
+                      "show_state": true,
+                      "state_content": "state"
+                    },
+                    {
+                      "type": "entity",
+                      "entity": "script.zgas_swiatla",
+                      "name": "Zgaś",
+                      "show_name": true,
+                      "show_state": false,
+                      "icon": "mdi:lightbulb-off",
+                      "color": "light-blue",
+                      "tap_action": {
+                        "action": "perform-action",
+                        "perform_action": "script.zgas_swiatla",
+                        "data": {
+                          "strefa": "pietro"
+                        },
+                        "confirmation": {
+                          "text": "Zgasić wszystkie światła: piętro?"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "markdown",
+                  "text_only": true,
+                  "content": "Maciek · Aga · Emi · Maja · Łazienka sypialnia · Duża łazienka · Korytarz piętro"
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Maciek",
+                  "heading_style": "title",
+                  "icon": "mdi:bed"
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.p1_pokoj_1_1",
+                    "name": "Światło 1",
+                    "vertical": false,
+                    "color": "light-blue",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.06)",
+                      "--state-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-off-color": "rgba(3, 169, 244, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.28)",
+                      "--ha-card-border-color": "rgba(3, 169, 244, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.p1_pokoj_1_2",
+                    "name": "Światło 2",
+                    "vertical": false,
+                    "color": "light-blue",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.06)",
+                      "--state-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-off-color": "rgba(3, 169, 244, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.28)",
+                      "--ha-card-border-color": "rgba(3, 169, 244, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.p1_pokoj_1_3",
+                    "name": "Światło 3",
+                    "vertical": false,
+                    "color": "light-blue",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.06)",
+                      "--state-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-off-color": "rgba(3, 169, 244, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.28)",
+                      "--ha-card-border-color": "rgba(3, 169, 244, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Aga",
+                  "heading_style": "title",
+                  "icon": "mdi:bed"
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.p1_pokoj_2_1",
+                    "name": "Światło 1",
+                    "vertical": false,
+                    "color": "light-blue",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.06)",
+                      "--state-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-off-color": "rgba(3, 169, 244, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.28)",
+                      "--ha-card-border-color": "rgba(3, 169, 244, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.p1_pokoj_2_2",
+                    "name": "Światło 2",
+                    "vertical": false,
+                    "color": "light-blue",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.06)",
+                      "--state-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-off-color": "rgba(3, 169, 244, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.28)",
+                      "--ha-card-border-color": "rgba(3, 169, 244, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.p1_pokoj_2_3",
+                    "name": "Światło 3",
+                    "vertical": false,
+                    "color": "light-blue",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.06)",
+                      "--state-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-off-color": "rgba(3, 169, 244, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.28)",
+                      "--ha-card-border-color": "rgba(3, 169, 244, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.p1_pokoj_2_4",
+                    "name": "Światło 4",
+                    "vertical": false,
+                    "color": "light-blue",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.06)",
+                      "--state-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-off-color": "rgba(3, 169, 244, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.28)",
+                      "--ha-card-border-color": "rgba(3, 169, 244, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Emi",
+                  "heading_style": "title",
+                  "icon": "mdi:bed"
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.p1_pokoj_3_1",
+                    "name": "Światło 1",
+                    "vertical": false,
+                    "color": "light-blue",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.06)",
+                      "--state-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-off-color": "rgba(3, 169, 244, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.28)",
+                      "--ha-card-border-color": "rgba(3, 169, 244, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.p1_pokoj_3_2",
+                    "name": "Światło 2",
+                    "vertical": false,
+                    "color": "light-blue",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.06)",
+                      "--state-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-off-color": "rgba(3, 169, 244, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.28)",
+                      "--ha-card-border-color": "rgba(3, 169, 244, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.p1_pokoj_3_3",
+                    "name": "Światło 3",
+                    "vertical": false,
+                    "color": "light-blue",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.06)",
+                      "--state-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-off-color": "rgba(3, 169, 244, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.28)",
+                      "--ha-card-border-color": "rgba(3, 169, 244, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Maja",
+                  "heading_style": "title",
+                  "icon": "mdi:bed"
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.p1_pokoj_4_1",
+                    "name": "Światło 1",
+                    "vertical": false,
+                    "color": "light-blue",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.06)",
+                      "--state-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-off-color": "rgba(3, 169, 244, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.28)",
+                      "--ha-card-border-color": "rgba(3, 169, 244, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.p1_pokoj_4_2",
+                    "name": "Światło 2",
+                    "vertical": false,
+                    "color": "light-blue",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.06)",
+                      "--state-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-off-color": "rgba(3, 169, 244, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.28)",
+                      "--ha-card-border-color": "rgba(3, 169, 244, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.p1_pokoj_4_3",
+                    "name": "Światło 3",
+                    "vertical": false,
+                    "color": "light-blue",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.06)",
+                      "--state-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-off-color": "rgba(3, 169, 244, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.28)",
+                      "--ha-card-border-color": "rgba(3, 169, 244, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Łazienka sypialnia",
+                  "heading_style": "title",
+                  "icon": "mdi:shower"
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.p1_lazienka_1_1",
+                    "name": "Światło 1",
+                    "vertical": false,
+                    "color": "light-blue",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.06)",
+                      "--state-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-off-color": "rgba(3, 169, 244, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.28)",
+                      "--ha-card-border-color": "rgba(3, 169, 244, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.p1_lazienka_1_2",
+                    "name": "Światło 2",
+                    "vertical": false,
+                    "color": "light-blue",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.06)",
+                      "--state-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-off-color": "rgba(3, 169, 244, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.28)",
+                      "--ha-card-border-color": "rgba(3, 169, 244, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.p1_lazienka_1_3",
+                    "name": "Światło 3",
+                    "vertical": false,
+                    "color": "light-blue",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.06)",
+                      "--state-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-off-color": "rgba(3, 169, 244, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.28)",
+                      "--ha-card-border-color": "rgba(3, 169, 244, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Duża łazienka",
+                  "heading_style": "title",
+                  "icon": "mdi:bathtub"
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.p1_lazienka_2_1",
+                    "name": "Światło 1",
+                    "vertical": false,
+                    "color": "light-blue",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.06)",
+                      "--state-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-off-color": "rgba(3, 169, 244, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.28)",
+                      "--ha-card-border-color": "rgba(3, 169, 244, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.p1_lazienka_2_2",
+                    "name": "Światło 2",
+                    "vertical": false,
+                    "color": "light-blue",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.06)",
+                      "--state-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-off-color": "rgba(3, 169, 244, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.28)",
+                      "--ha-card-border-color": "rgba(3, 169, 244, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.p1_lazienka_2_3",
+                    "name": "Światło 3",
+                    "vertical": false,
+                    "color": "light-blue",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.06)",
+                      "--state-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-off-color": "rgba(3, 169, 244, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.28)",
+                      "--ha-card-border-color": "rgba(3, 169, 244, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.p1_lazienka_2_4",
+                    "name": "Światło 4",
+                    "vertical": false,
+                    "color": "light-blue",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.06)",
+                      "--state-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-off-color": "rgba(3, 169, 244, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.28)",
+                      "--ha-card-border-color": "rgba(3, 169, 244, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.p1_lazienka_2_5",
+                    "name": "Światło 5",
+                    "vertical": false,
+                    "color": "light-blue",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.06)",
+                      "--state-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-off-color": "rgba(3, 169, 244, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.28)",
+                      "--ha-card-border-color": "rgba(3, 169, 244, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Korytarz piętro",
+                  "heading_style": "title",
+                  "icon": "mdi:stairs"
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.p1_korytarz_1",
+                    "name": "Korytarz 1",
+                    "vertical": false,
+                    "color": "light-blue",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.06)",
+                      "--state-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-off-color": "rgba(3, 169, 244, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.28)",
+                      "--ha-card-border-color": "rgba(3, 169, 244, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.p1_korytarz_2",
+                    "name": "Korytarz 2",
+                    "vertical": false,
+                    "color": "light-blue",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.06)",
+                      "--state-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-inactive-color": "rgba(3, 169, 244, 0.55)",
+                      "--state-switch-off-color": "rgba(3, 169, 244, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(3, 169, 244, 0.28)",
+                      "--ha-card-border-color": "rgba(3, 169, 244, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "column_span": 4,
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Na zewnątrz",
+                  "icon": "mdi:tree",
+                  "heading_style": "title",
+                  "badges": [
+                    {
+                      "type": "entity",
+                      "entity": "sensor.swiatla_na_zewnatrz",
+                      "color": "light-green",
+                      "show_icon": true,
+                      "show_state": true,
+                      "state_content": "state"
+                    },
+                    {
+                      "type": "entity",
+                      "entity": "script.zgas_swiatla",
+                      "name": "Zgaś",
+                      "show_name": true,
+                      "show_state": false,
+                      "icon": "mdi:lightbulb-off",
+                      "color": "light-green",
+                      "tap_action": {
+                        "action": "perform-action",
+                        "perform_action": "script.zgas_swiatla",
+                        "data": {
+                          "strefa": "zewnatrz"
+                        },
+                        "confirmation": {
+                          "text": "Zgasić wszystkie światła: na zewnątrz?"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "markdown",
+                  "text_only": true,
+                  "content": "Ogród i taras"
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Ogród i taras",
+                  "heading_style": "title",
+                  "icon": "mdi:pine-tree"
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.przed_wejsciem",
+                    "name": "Przed wejściem",
+                    "vertical": false,
+                    "color": "light-green",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(139, 195, 74, 0.06)",
+                      "--state-inactive-color": "rgba(139, 195, 74, 0.55)",
+                      "--state-switch-inactive-color": "rgba(139, 195, 74, 0.55)",
+                      "--state-switch-off-color": "rgba(139, 195, 74, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(139, 195, 74, 0.28)",
+                      "--ha-card-border-color": "rgba(139, 195, 74, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.balkon",
+                    "name": "Balkon",
+                    "vertical": false,
+                    "color": "light-green",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(139, 195, 74, 0.06)",
+                      "--state-inactive-color": "rgba(139, 195, 74, 0.55)",
+                      "--state-switch-inactive-color": "rgba(139, 195, 74, 0.55)",
+                      "--state-switch-off-color": "rgba(139, 195, 74, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(139, 195, 74, 0.28)",
+                      "--ha-card-border-color": "rgba(139, 195, 74, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.pergola",
+                    "name": "Pergola",
+                    "vertical": false,
+                    "color": "light-green",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(139, 195, 74, 0.06)",
+                      "--state-inactive-color": "rgba(139, 195, 74, 0.55)",
+                      "--state-switch-inactive-color": "rgba(139, 195, 74, 0.55)",
+                      "--state-switch-off-color": "rgba(139, 195, 74, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(139, 195, 74, 0.28)",
+                      "--ha-card-border-color": "rgba(139, 195, 74, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.pergola_led",
+                    "name": "Pergola LED",
+                    "vertical": false,
+                    "color": "light-green",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(139, 195, 74, 0.06)",
+                      "--state-inactive-color": "rgba(139, 195, 74, 0.55)",
+                      "--state-switch-inactive-color": "rgba(139, 195, 74, 0.55)",
+                      "--state-switch-off-color": "rgba(139, 195, 74, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(139, 195, 74, 0.28)",
+                      "--ha-card-border-color": "rgba(139, 195, 74, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                },
+                {
+                  "type": "custom:dom-kafelek",
+                  "grid_options": {
+                    "columns": 6
+                  },
+                  "card": {
+                    "type": "tile",
+                    "entity": "switch.gniazdko_ogrod",
+                    "name": "Gniazdko ogród",
+                    "vertical": false,
+                    "color": "light-green",
+                    "tap_action": {
+                      "action": "toggle"
+                    },
+                    "icon_tap_action": {
+                      "action": "toggle"
+                    },
+                    "grid_options": {
+                      "columns": 6
+                    }
+                  },
+                  "stany": {
+                    "off": {
+                      "--ha-card-background": "rgba(139, 195, 74, 0.06)",
+                      "--state-inactive-color": "rgba(139, 195, 74, 0.55)",
+                      "--state-switch-inactive-color": "rgba(139, 195, 74, 0.55)",
+                      "--state-switch-off-color": "rgba(139, 195, 74, 0.55)"
+                    },
+                    "on": {
+                      "--ha-card-background": "rgba(139, 195, 74, 0.28)",
+                      "--ha-card-border-color": "rgba(139, 195, 74, 0.9)",
+                      "--ha-card-border-width": "2px"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Rolety",
+          "path": "rolety",
+          "icon": "mdi:window-shutter",
+          "type": "sections",
+          "max_columns": 2,
+          "sections": [
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Wszystkie rolety",
+                  "heading_style": "title",
+                  "icon": "mdi:window-shutter"
+                },
+                {
+                  "type": "button",
+                  "name": "W dół",
+                  "icon": "mdi:window-shutter",
+                  "show_state": false,
+                  "tap_action": {
+                    "action": "perform-action",
+                    "perform_action": "script.zamknij_wszystkie_rolety",
+                    "confirmation": {
+                      "text": "Zamknąć wszystkie rolety?"
+                    }
+                  },
+                  "grid_options": {
+                    "columns": 4,
+                    "rows": 2
+                  }
+                },
+                {
+                  "type": "button",
+                  "name": "W górę",
+                  "icon": "mdi:window-shutter-open",
+                  "show_state": false,
+                  "tap_action": {
+                    "action": "perform-action",
+                    "perform_action": "script.otworz_wszystkie_rolety",
+                    "confirmation": {
+                      "text": "Otworzyć wszystkie rolety?"
+                    }
+                  },
+                  "grid_options": {
+                    "columns": 4,
+                    "rows": 2
+                  }
+                },
+                {
+                  "type": "tile",
+                  "entity": "cover.roleta_salon",
+                  "name": "Salon",
+                  "tap_action": {
+                    "action": "more-info"
+                  },
+                  "features": [
+                    {
+                      "type": "cover-open-close"
+                    },
+                    {
+                      "type": "cover-position"
+                    }
+                  ],
+                  "features_position": "bottom",
+                  "grid_options": {
+                    "columns": 6
+                  }
+                },
+                {
+                  "type": "tile",
+                  "entity": "cover.roleta_kuchnia",
+                  "name": "Kuchnia",
+                  "tap_action": {
+                    "action": "more-info"
+                  },
+                  "features": [
+                    {
+                      "type": "cover-open-close"
+                    },
+                    {
+                      "type": "cover-position"
+                    }
+                  ],
+                  "features_position": "bottom",
+                  "grid_options": {
+                    "columns": 6
+                  }
+                },
+                {
+                  "type": "tile",
+                  "entity": "cover.roleta_gabinet",
+                  "name": "Gabinet",
+                  "tap_action": {
+                    "action": "more-info"
+                  },
+                  "features": [
+                    {
+                      "type": "cover-open-close"
+                    },
+                    {
+                      "type": "cover-position"
+                    }
+                  ],
+                  "features_position": "bottom",
+                  "grid_options": {
+                    "columns": 6
+                  }
+                },
+                {
+                  "type": "tile",
+                  "entity": "cover.roleta_pokoj_3",
+                  "name": "Emi",
+                  "tap_action": {
+                    "action": "more-info"
+                  },
+                  "features": [
+                    {
+                      "type": "cover-open-close"
+                    },
+                    {
+                      "type": "cover-position"
+                    }
+                  ],
+                  "features_position": "bottom",
+                  "grid_options": {
+                    "columns": 6
+                  }
+                },
+                {
+                  "type": "tile",
+                  "entity": "cover.roleta_pokoj_4",
+                  "name": "Maja",
+                  "tap_action": {
+                    "action": "more-info"
+                  },
+                  "features": [
+                    {
+                      "type": "cover-open-close"
+                    },
+                    {
+                      "type": "cover-position"
+                    }
+                  ],
+                  "features_position": "bottom",
+                  "grid_options": {
+                    "columns": 6
+                  }
+                },
+                {
+                  "type": "tile",
+                  "entity": "cover.roleta_pergola",
+                  "name": "Pergola",
+                  "tap_action": {
+                    "action": "more-info"
+                  },
+                  "features": [
+                    {
+                      "type": "cover-open-close"
+                    },
+                    {
+                      "type": "cover-position"
+                    }
+                  ],
+                  "features_position": "bottom",
+                  "grid_options": {
+                    "columns": 6
+                  }
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Brama",
+                  "heading_style": "title",
+                  "icon": "mdi:gate"
+                },
+                {
+                  "type": "tile",
+                  "entity": "cover.brama",
+                  "name": "Brama",
+                  "tap_action": {
+                    "action": "more-info"
+                  },
+                  "features": [
+                    {
+                      "type": "cover-open-close"
+                    },
+                    {
+                      "type": "cover-position"
+                    }
+                  ],
+                  "features_position": "bottom",
+                  "grid_options": {
+                    "columns": 12
+                  }
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.brama_otwarta",
+                  "name": "Czujnik bramy",
+                  "grid_options": {
+                    "columns": 12
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Ogrzewanie",
+          "path": "ogrzewanie",
+          "icon": "mdi:radiator",
+          "type": "sections",
+          "max_columns": 3,
+          "sections": [
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Cały dom",
+                  "heading_style": "title",
+                  "icon": "mdi:home-thermometer"
+                },
+                {
+                  "type": "tile",
+                  "entity": "input_number.temperatura_dom",
+                  "name": "Ustaw wszędzie",
+                  "features": [
+                    {
+                      "type": "numeric-input",
+                      "style": "slider"
+                    }
+                  ],
+                  "grid_options": {
+                    "columns": 12
+                  }
+                },
+                {
+                  "type": "markdown",
+                  "content": "Suwak strefy ustawia tę samą temperaturę na wszystkich termostatach w strefie. Pojedynczy pokój zmienisz przyciskami +/− na jego kafelku."
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Parter",
+                  "heading_style": "title",
+                  "icon": "mdi:home-floor-0"
+                },
+                {
+                  "type": "tile",
+                  "entity": "input_number.temperatura_parter",
+                  "name": "Cały parter",
+                  "features": [
+                    {
+                      "type": "numeric-input",
+                      "style": "slider"
+                    }
+                  ],
+                  "grid_options": {
+                    "columns": 12
+                  }
+                },
+                {
+                  "type": "tile",
+                  "entity": "climate.ogrzewanie_salon",
+                  "name": "Salon",
+                  "state_content": [
+                    "current_temperature",
+                    "hvac_action"
+                  ],
+                  "features": [
+                    {
+                      "type": "target-temperature"
+                    }
+                  ],
+                  "features_position": "bottom",
+                  "grid_options": {
+                    "columns": 6
+                  }
+                },
+                {
+                  "type": "tile",
+                  "entity": "climate.ogrzewanie_kuchnia",
+                  "name": "Kuchnia",
+                  "state_content": [
+                    "current_temperature",
+                    "hvac_action"
+                  ],
+                  "features": [
+                    {
+                      "type": "target-temperature"
+                    }
+                  ],
+                  "features_position": "bottom",
+                  "grid_options": {
+                    "columns": 6
+                  }
+                },
+                {
+                  "type": "tile",
+                  "entity": "climate.ogrzewanie_pokoj",
+                  "name": "Siłownia",
+                  "state_content": [
+                    "current_temperature",
+                    "hvac_action"
+                  ],
+                  "features": [
+                    {
+                      "type": "target-temperature"
+                    }
+                  ],
+                  "features_position": "bottom",
+                  "grid_options": {
+                    "columns": 6
+                  }
+                },
+                {
+                  "type": "tile",
+                  "entity": "climate.ogrzewanie_wc",
+                  "name": "WC",
+                  "state_content": [
+                    "current_temperature",
+                    "hvac_action"
+                  ],
+                  "features": [
+                    {
+                      "type": "target-temperature"
+                    }
+                  ],
+                  "features_position": "bottom",
+                  "grid_options": {
+                    "columns": 6
+                  }
+                },
+                {
+                  "type": "tile",
+                  "entity": "climate.ogrzewanie_wiatrolap",
+                  "name": "Wiatrołap",
+                  "state_content": [
+                    "current_temperature",
+                    "hvac_action"
+                  ],
+                  "features": [
+                    {
+                      "type": "target-temperature"
+                    }
+                  ],
+                  "features_position": "bottom",
+                  "grid_options": {
+                    "columns": 6
+                  }
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Piętro",
+                  "heading_style": "title",
+                  "icon": "mdi:home-floor-1"
+                },
+                {
+                  "type": "tile",
+                  "entity": "input_number.temperatura_pietro",
+                  "name": "Cały piętro",
+                  "features": [
+                    {
+                      "type": "numeric-input",
+                      "style": "slider"
+                    }
+                  ],
+                  "grid_options": {
+                    "columns": 12
+                  }
+                },
+                {
+                  "type": "tile",
+                  "entity": "climate.ogrzewanie_p1_pokoj_1",
+                  "name": "Maciek",
+                  "state_content": [
+                    "current_temperature",
+                    "hvac_action"
+                  ],
+                  "features": [
+                    {
+                      "type": "target-temperature"
+                    }
+                  ],
+                  "features_position": "bottom",
+                  "grid_options": {
+                    "columns": 6
+                  }
+                },
+                {
+                  "type": "tile",
+                  "entity": "climate.ogrzewanie_p1_pokoj_2",
+                  "name": "Aga",
+                  "state_content": [
+                    "current_temperature",
+                    "hvac_action"
+                  ],
+                  "features": [
+                    {
+                      "type": "target-temperature"
+                    }
+                  ],
+                  "features_position": "bottom",
+                  "grid_options": {
+                    "columns": 6
+                  }
+                },
+                {
+                  "type": "tile",
+                  "entity": "climate.ogrzewanie_p1_pokoj_3",
+                  "name": "Emi",
+                  "state_content": [
+                    "current_temperature",
+                    "hvac_action"
+                  ],
+                  "features": [
+                    {
+                      "type": "target-temperature"
+                    }
+                  ],
+                  "features_position": "bottom",
+                  "grid_options": {
+                    "columns": 6
+                  }
+                },
+                {
+                  "type": "tile",
+                  "entity": "climate.ogrzewanie_p1_pokoj_4",
+                  "name": "Maja",
+                  "state_content": [
+                    "current_temperature",
+                    "hvac_action"
+                  ],
+                  "features": [
+                    {
+                      "type": "target-temperature"
+                    }
+                  ],
+                  "features_position": "bottom",
+                  "grid_options": {
+                    "columns": 6
+                  }
+                },
+                {
+                  "type": "tile",
+                  "entity": "climate.ogrzewanie_p1_lazienka_1",
+                  "name": "Łazienka sypialnia",
+                  "state_content": [
+                    "current_temperature",
+                    "hvac_action"
+                  ],
+                  "features": [
+                    {
+                      "type": "target-temperature"
+                    }
+                  ],
+                  "features_position": "bottom",
+                  "grid_options": {
+                    "columns": 6
+                  }
+                },
+                {
+                  "type": "tile",
+                  "entity": "climate.ogrzewanie_p1_lazienka_2",
+                  "name": "Duża łazienka",
+                  "state_content": [
+                    "current_temperature",
+                    "hvac_action"
+                  ],
+                  "features": [
+                    {
+                      "type": "target-temperature"
+                    }
+                  ],
+                  "features_position": "bottom",
+                  "grid_options": {
+                    "columns": 6
+                  }
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Przekaźniki grzania",
+                  "heading_style": "subtitle",
+                  "icon": "mdi:radiator"
+                },
+                {
+                  "type": "glance",
+                  "columns": 4,
+                  "state_color": true,
+                  "show_state": false,
+                  "entities": [
+                    {
+                      "entity": "switch.ogrzewanie_salon",
+                      "name": "Salon",
+                      "tap_action": {
+                        "action": "more-info"
+                      }
+                    },
+                    {
+                      "entity": "switch.ogrzewanie_kuchnia",
+                      "name": "Kuchnia",
+                      "tap_action": {
+                        "action": "more-info"
+                      }
+                    },
+                    {
+                      "entity": "switch.ogrzewanie_pokoj",
+                      "name": "Siłownia",
+                      "tap_action": {
+                        "action": "more-info"
+                      }
+                    },
+                    {
+                      "entity": "switch.ogrzewanie_wc",
+                      "name": "WC",
+                      "tap_action": {
+                        "action": "more-info"
+                      }
+                    },
+                    {
+                      "entity": "switch.ogrzewanie_wiatrolap",
+                      "name": "Wiatrołap",
+                      "tap_action": {
+                        "action": "more-info"
+                      }
+                    },
+                    {
+                      "entity": "switch.ogrzewanie_p1_pokoj_1",
+                      "name": "Maciek",
+                      "tap_action": {
+                        "action": "more-info"
+                      }
+                    },
+                    {
+                      "entity": "switch.ogrzewanie_p1_pokoj_2",
+                      "name": "Aga",
+                      "tap_action": {
+                        "action": "more-info"
+                      }
+                    },
+                    {
+                      "entity": "switch.ogrzewanie_p1_pokoj_3",
+                      "name": "Emi",
+                      "tap_action": {
+                        "action": "more-info"
+                      }
+                    },
+                    {
+                      "entity": "switch.ogrzewanie_p1_pokoj_4",
+                      "name": "Maja",
+                      "tap_action": {
+                        "action": "more-info"
+                      }
+                    },
+                    {
+                      "entity": "switch.ogrzewanie_p1_lazienka_1",
+                      "name": "Łazienka sypialnia",
+                      "tap_action": {
+                        "action": "more-info"
+                      }
+                    },
+                    {
+                      "entity": "switch.ogrzewanie_p1_lazienka_2",
+                      "name": "Duża łazienka",
+                      "tap_action": {
+                        "action": "more-info"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Historia",
+          "path": "historia",
+          "icon": "mdi:chart-line",
+          "type": "sections",
+          "max_columns": 2,
+          "sections": [
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Temperatury",
+                  "heading_style": "title",
+                  "icon": "mdi:chart-line"
+                },
+                {
+                  "type": "history-graph",
+                  "title": "Parter – 48 h",
+                  "hours_to_show": 48,
+                  "entities": [
+                    {
+                      "entity": "sensor.dom_temperatura_salon",
+                      "name": "Salon"
+                    },
+                    {
+                      "entity": "sensor.dom_temperatura_kuchnia",
+                      "name": "Kuchnia"
+                    },
+                    {
+                      "entity": "sensor.dom_temperatura_pokoj",
+                      "name": "Siłownia"
+                    },
+                    {
+                      "entity": "sensor.dom_temperatura_wc",
+                      "name": "WC"
+                    },
+                    {
+                      "entity": "sensor.dom_temperatura_wiatrolap",
+                      "name": "Wiatrołap"
+                    }
+                  ]
+                },
+                {
+                  "type": "history-graph",
+                  "title": "Piętro – 48 h",
+                  "hours_to_show": 48,
+                  "entities": [
+                    {
+                      "entity": "sensor.dom_temperatura_p1_pokoj_1",
+                      "name": "Maciek"
+                    },
+                    {
+                      "entity": "sensor.dom_temperatura_p1_pokoj_2",
+                      "name": "Aga"
+                    },
+                    {
+                      "entity": "sensor.dom_temperatura_p1_pokoj_3",
+                      "name": "Emi"
+                    },
+                    {
+                      "entity": "sensor.dom_temperatura_p1_pokoj_4",
+                      "name": "Maja"
+                    },
+                    {
+                      "entity": "sensor.dom_temperatura_p1_lazienka_1",
+                      "name": "Łazienka sypialnia"
+                    },
+                    {
+                      "entity": "sensor.dom_temperatura_p1_lazienka_2",
+                      "name": "Duża łazienka"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Pozostałe",
+                  "heading_style": "title",
+                  "icon": "mdi:information-outline"
+                },
+                {
+                  "type": "history-graph",
+                  "title": "Natężenie światła",
+                  "hours_to_show": 48,
+                  "entities": [
+                    {
+                      "entity": "sensor.dom_ls",
+                      "name": "Czujnik światła"
+                    }
+                  ]
+                },
+                {
+                  "type": "logbook",
+                  "title": "Ostatnie zdarzenia",
+                  "hours_to_show": 24,
+                  "target": {
+                    "entity_id": [
+                      "cover.brama",
+                      "binary_sensor.brama_otwarta",
+                      "binary_sensor.dom_pozar",
+                      "binary_sensor.dom_woda_1",
+                      "binary_sensor.dom_woda_2"
+                    ]
+                  }
+                },
+                {
+                  "type": "entities",
+                  "title": "Drukarka",
+                  "entities": [
+                    {
+                      "entity": "sensor.dom_hp_laserjet_mfp_m129_m134",
+                      "name": "Stan"
+                    },
+                    {
+                      "entity": "sensor.dom_hp_laserjet_mfp_m129_m134_black_cartridge_hp_cf217a",
+                      "name": "Toner"
+                    },
+                    {
+                      "entity": "sensor.dom_hp_laserjet_mfp_m129_m134_imaging_drum_hp_cf219a",
+                      "name": "Bęben"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
