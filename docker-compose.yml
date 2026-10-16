@@ -8,7 +8,7 @@ x-logging: &logging
 
 services:
   homeassistant:
-    container_name: ha-test
+    container_name: homeassistant
     image: ghcr.io/home-assistant/home-assistant:stable
     restart: unless-stopped
     network_mode: host

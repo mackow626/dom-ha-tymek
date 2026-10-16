@@ -7,9 +7,9 @@ Nowy HA w Dockerze, który pokazuje dane ze starego HA dewelopera (0.118.5) i po
 
 | Kontener    | Rola |
 |-------------|------|
-| `ha-test`   | nowy Home Assistant, port `8123` |
+| `homeassistant` | nowy Home Assistant, port `8123` (sieć hosta) |
 | `ha-bridge` | most: czyta stany starego HA i zapisuje je w nowym HA jako `sensor.dom_*` / `binary_sensor.dom_*` |
-| `ha-mqtt`   | broker MQTT widoczny tylko w Dockerze; przez niego nowy HA dostaje kontrolki: `climate.*`, `switch.*`, `cover.*` (te same nazwy co w starym HA) |
+| `ha-mqtt`   | broker MQTT nasłuchujący tylko lokalnie na serwerze (127.0.0.1); przez niego nowy HA dostaje kontrolki: `climate.*`, `switch.*`, `cover.*` (te same nazwy co w starym HA) |
 
 Zapis do starego HA jest ograniczony listami w `.env` (nazwy po przecinku, `*` = wszystkie, puste = brak sterowania):
 - `CLIMATE_CONTROL`: tylko `climate.set_temperature`, w zakresie `MIN_SETPOINT`–`MAX_SETPOINT`;
@@ -47,21 +47,21 @@ sudo usermod -aG docker $USER      # potem wyloguj się i zaloguj ponownie
 
 ### 2. Kod
 ```
-git clone <adres-repozytorium> ha-readonly
-cd ha-readonly
+git clone <adres-repozytorium> dom-ha
+cd dom-ha
 ```
 
 ### 3a. Przeniesienie obecnego HA z Maca (zalecane)
 Zachowasz konto, dashboard „Dom”, integrację MQTT, tokeny i parowanie aplikacji w telefonie.
 
-Na Macu, w folderze `ha-readonly`:
+Na Macu, w folderze `dom-ha`:
 ```
 docker compose stop
 COPYFILE_DISABLE=1 tar --no-mac-metadata -czf ha-stan.tgz --exclude='config/home-assistant.log*' config .env
 scp ha-stan.tgz UZYTKOWNIK@IP_SERWERA:~/
 ```
 
-Na serwerze, w folderze `ha-readonly`:
+Na serwerze, w folderze `dom-ha`:
 ```
 tar -xzf ~/ha-stan.tgz
 chmod 600 .env
@@ -172,3 +172,11 @@ cards:
         entity: climate.ogrzewanie_p1_pokoj_2
 ```
 Suwaki stref pochodzą z `config/packages/strefy.yaml`. Pozostałe pokoje dodajesz tak samo (`climate.ogrzewanie_...`).
+
+## Sieć na serwerze
+
+- Wszystkie kontenery działają w sieci hosta (`network_mode: host`) – wymagane przez HomeKit (mDNS).
+- Mosquitto nasłuchuje tylko na `127.0.0.1:1883`; w integracji MQTT w HA broker to `127.0.0.1`.
+- Klimatyzatory Gree są w osobnym VLAN-ie (VLAN 2, `192.168.3.0/24`). Serwer ma w nim drugi interfejs
+  `enp1s0.2` z adresem `192.168.3.250` (bez bramy) – plik `/etc/network/interfaces.d/klimy`.
+  W HA: Ustawienia → System → Sieć → Karta sieciowa: zaznaczone `enp1s0` i `enp1s0.2`.
