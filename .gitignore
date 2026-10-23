@@ -28,3 +28,5 @@ backup-*/
 __pycache__/
 *.przed-*
 *.bak-*
+# klucze sieci Matter
+matter/
