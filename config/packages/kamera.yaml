@@ -1,9 +1,9 @@
 # Ruch z kamery Aqara (jest w Apple Home przez HomeKit, więc HA nie widzi jej bezpośrednio).
 #
 # input_boolean.kamera_ruch trafia do Apple Home przez HomeKit Bridge jako przełącznik.
-# W aplikacji Dom dwie automatyzacje: „gdy kamera wykryje ruch → włącz Kamera ruch”
-# i „gdy ruch ustanie → wyłącz Kamera ruch”. Gdyby wyłączenie nie dotarło, HA zrobi to sam
-# po 10 minutach. binary_sensor.ruch_kamera to czujnik ruchu do automatyzacji.
+# W aplikacji Dom automatyzacja: „gdy kamera wykryje ruch → włącz Kamera ruch”.
+# HA wyłącza go po 5 s, żeby każde kolejne wykrycie było nowym impulsem „on”.
+# binary_sensor.ruch_kamera = impuls ruchu; automatyzacje liczą czas od ostatniego impulsu.
 # Celowo input_boolean, a nie switch – skrypty „wyłącz światła” i liczniki świateł biorą wszystkie switch.*.
 
 input_boolean:
@@ -20,19 +20,20 @@ template:
 
 automation:
   - id: dom_kamera_ruch_reset
-    alias: "Kamera: zresetuj ruch po 10 minutach (zabezpieczenie)"
+    alias: "Kamera: zresetuj impuls ruchu"
     mode: restart
     triggers:
       - trigger: state
         entity_id: input_boolean.kamera_ruch
         to: "on"
-        for: "00:10:00"
+        for: "00:00:05"
     actions:
       - action: input_boolean.turn_off
         target:
           entity_id: input_boolean.kamera_ruch
 
-  # Garaż: ruch włącza światło, gaśnie minutę po ostatnim ruchu.
+  # Garaż: ruch włącza światło, gaśnie minutę po ostatnim impulsie ruchu.
+  # Każdy nowy impuls (off→on) przerywa odliczanie, więc ruch przedłuża światło o kolejną minutę.
   - id: dom_garaz_swiatlo_ruch
     alias: "Garaż: światło na ruch"
     mode: restart
