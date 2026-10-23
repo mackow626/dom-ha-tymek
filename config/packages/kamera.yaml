@@ -12,11 +12,11 @@ input_boolean:
     icon: mdi:motion-sensor
 
 # Po zgaszeniu światła w garażu kamera widzi zmianę obrazu jako ruch i zapalała je z powrotem
-# (pętla co ~65 s). Przez 20 s po zgaszeniu ruch jest ignorowany.
+# (pętla co ~65 s). Przez 30 s po każdym zgaszeniu (automatycznym, ręcznym, zdalnym) ruch jest ignorowany.
 timer:
   garaz_po_zgaszeniu:
     name: "Garaż: przerwa po zgaszeniu"
-    duration: "00:00:20"
+    duration: "00:00:30"
 
 template:
   - binary_sensor:
@@ -54,6 +54,11 @@ automation:
         to: "off"
         for: "00:01:00"
         id: cisza
+      - trigger: state
+        entity_id: [switch.garaz_1, switch.garaz_2]
+        from: "on"
+        to: "off"
+        id: zgaszone
     actions:
       - choose:
           - conditions:
@@ -76,3 +81,10 @@ automation:
               - action: switch.turn_off
                 target:
                   entity_id: [switch.garaz_1, switch.garaz_2]
+          - conditions:
+              - condition: trigger
+                id: zgaszone
+            sequence:
+              - action: timer.start
+                target:
+                  entity_id: timer.garaz_po_zgaszeniu
