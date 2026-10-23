@@ -1,0 +1,32 @@
+# Ruch z kamery Aqara (jest w Apple Home przez HomeKit, więc HA nie widzi jej bezpośrednio).
+#
+# input_boolean.kamera_ruch trafia do Apple Home przez HomeKit Bridge jako przełącznik.
+# W aplikacji Dom automatyzacja: „gdy kamera wykryje ruch → włącz Kamera ruch”.
+# HA wyłącza go sam po minucie; binary_sensor.kamera_ruch to czujnik ruchu do automatyzacji.
+# Celowo input_boolean, a nie switch – skrypty „wyłącz światła” i liczniki świateł biorą wszystkie switch.*.
+
+input_boolean:
+  kamera_ruch:
+    name: "Kamera ruch"
+    icon: mdi:motion-sensor
+
+template:
+  - binary_sensor:
+      - name: "Ruch kamera"
+        unique_id: dom_kamera_ruch
+        device_class: motion
+        state: "{{ is_state('input_boolean.kamera_ruch', 'on') }}"
+
+automation:
+  - id: dom_kamera_ruch_reset
+    alias: "Kamera: zresetuj ruch po minucie"
+    mode: restart
+    triggers:
+      - trigger: state
+        entity_id: input_boolean.kamera_ruch
+        to: "on"
+        for: "00:01:00"
+    actions:
+      - action: input_boolean.turn_off
+        target:
+          entity_id: input_boolean.kamera_ruch
