@@ -1,3 +1,16 @@
+# dom-ha-tymek
+
+Konfiguracja domu Tymka – kopia [dom-ha](https://github.com/mackow626/dom-ha) z własnymi ustawieniami domu
+(bez Matter i kamery w garażu). Poprawki wspólnego kodu (most, generator dashboardu) przychodzą z dom-ha:
+
+```
+git pull upstream main && git push   # w tym repo; na serwerze Tymka potem zwykłe git pull
+```
+
+Zmiany w konfiguracji Tymka (pakiety, dashboard, .env) robimy tylko tutaj / na jego serwerze.
+
+---
+
 # Nowy Home Assistant + most do starego HA
 
 Nowy HA w Dockerze, który pokazuje dane ze starego HA dewelopera (0.118.5) i pozwala sterować
@@ -177,7 +190,6 @@ Suwaki stref pochodzą z `config/packages/strefy.yaml`. Pozostałe pokoje dodaje
 
 - Wszystkie kontenery działają w sieci hosta (`network_mode: host`) – wymagane przez HomeKit (mDNS).
 - Mosquitto nasłuchuje tylko na `127.0.0.1:1883`; w integracji MQTT w HA broker to `127.0.0.1`.
-- Matter Server nasłuchuje tylko na `127.0.0.1:5580` (integracja Matter w HA: `ws://localhost:5580/ws`), IPv6 przez `enp1s0`. Dane i klucze w `matter/` (poza gitem – zrób kopię zapasową).
 - Klimatyzatory Gree są w osobnym VLAN-ie (VLAN 2, `192.168.3.0/24`). Serwer ma w nim drugi interfejs
   `enp1s0.2` z adresem `192.168.3.250` (bez bramy) – plik `/etc/network/interfaces.d/klimy`.
   W HA: Ustawienia → System → Sieć → Karta sieciowa: zaznaczone `enp1s0` i `enp1s0.2`.

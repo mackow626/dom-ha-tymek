@@ -41,20 +41,3 @@ services:
       - mosquitto
     logging: *logging
 
-  # Kontroler Matter dla HA (urządzenia z Apple Home dodawane przez multi-admin).
-  # Nasłuchuje tylko lokalnie; w HA integracja Matter: ws://localhost:5580/ws
-  matter-server:
-    container_name: matter-server
-    image: ghcr.io/home-assistant-libs/python-matter-server:stable
-    restart: unless-stopped
-    network_mode: host
-    security_opt:
-      - apparmor=unconfined
-    volumes:
-      - ./matter:/data
-    command:
-      - --storage-path=/data
-      - --paa-root-cert-dir=/data/credentials
-      - --listen-address=127.0.0.1
-      - --primary-interface=enp1s0
-    logging: *logging

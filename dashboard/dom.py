@@ -87,13 +87,9 @@ ALARMY = [
     ("binary_sensor.dom_woda_2", "Zalanie 2"),
 ]
 
-# Klimatyzatory Gree (integracja Gree Climate, lokalnie przez VLAN 2)
+# Klimatyzatory Gree (integracja Gree Climate). Uzupełnić po dodaniu integracji Gree:
+# ("climate.<id>", "Nazwa pokoju"), identyfikatory z Narzędzia deweloperskie → Stany.
 KLIMY = [
-    ("climate.7cb8e62f5795", "Salon"),
-    ("climate.7cb8e61ea946", "Maja"),
-    ("climate.7cb8e61f5a27", "Maciek"),
-    ("climate.7cb8e61fc3e6", "Emi"),
-    ("climate.7cb8e61fb72f", "Aga"),
 ]
 
 

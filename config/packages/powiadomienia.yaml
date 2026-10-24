@@ -25,7 +25,8 @@ script:
       akcje: {description: "Lista przycisków [{action, title}]"}
       tag: {description: "Ten sam tag zastępuje poprzednie powiadomienie"}
     sequence:
-      - action: notify.mobile_app_iphone_maciej_2
+      # notify.notify = wszystkie telefony z aplikacją HA; można zawęzić do notify.mobile_app_<telefon>
+      - action: notify.notify
         data:
           title: "{{ tytul }}"
           message: "{{ tresc }}"
