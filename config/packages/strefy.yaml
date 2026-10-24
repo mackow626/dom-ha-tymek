@@ -42,7 +42,7 @@ automation:
           entity_id:
             - climate.ogrzewanie_salon
             - climate.ogrzewanie_kuchnia
-            - climate.ogrzewanie_pokoj
+            - climate.ogrzewanie_pokoj_1
             - climate.ogrzewanie_wc
             - climate.ogrzewanie_wiatrolap
         data:
@@ -85,7 +85,7 @@ automation:
           entity_id:
             - climate.ogrzewanie_salon
             - climate.ogrzewanie_kuchnia
-            - climate.ogrzewanie_pokoj
+            - climate.ogrzewanie_pokoj_1
             - climate.ogrzewanie_wc
             - climate.ogrzewanie_wiatrolap
             - climate.ogrzewanie_p1_pokoj_1

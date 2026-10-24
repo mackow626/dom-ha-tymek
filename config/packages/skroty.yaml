@@ -9,7 +9,7 @@ script:
         target:
           entity_id: >-
             {{ states.switch
-               | rejectattr('entity_id', 'search', 'ogrzewanie|gniazdko')
+               | rejectattr('entity_id', 'search', 'ogrzewanie|gniazdko|\\.gn_')
                | selectattr('state', 'eq', 'on')
                | map(attribute='entity_id') | list }}
 
@@ -50,13 +50,13 @@ script:
         target:
           entity_id: >-
             {% set wl = states.switch | selectattr('state', 'eq', 'on')
-                 | rejectattr('object_id', 'search', '^(ogrzewanie|gniazdko)') | list %}
+                 | rejectattr('object_id', 'search', '^(ogrzewanie|gniazdko|gn_)') | list %}
             {% if strefa == 'pietro' %}
               {{ wl | selectattr('object_id', 'search', '^p1_') | map(attribute='entity_id') | list }}
             {% elif strefa == 'zewnatrz' %}
               {{ wl | selectattr('object_id', 'search', '^(przed_wejsciem|balkon|pergola)') | map(attribute='entity_id') | list }}
             {% else %}
-              {{ wl | rejectattr('object_id', 'search', '^(p1_|przed_wejsciem|balkon|pergola|gniazdko)') | map(attribute='entity_id') | list }}
+              {{ wl | rejectattr('object_id', 'search', '^(p1_|przed_wejsciem|balkon|pergola|gniazdko|gn_)') | map(attribute='entity_id') | list }}
             {% endif %}
 
 # Liczniki włączonych świateł na piętrach (do nagłówków na dashboardzie).
@@ -68,7 +68,7 @@ template:
         unit_of_measurement: "wł."
         state: >-
           {{ states.switch | selectattr('state', 'eq', 'on')
-             | rejectattr('object_id', 'search', '^(p1_|ogrzewanie|gniazdko|przed_wejsciem|balkon|pergola)')
+             | rejectattr('object_id', 'search', '^(p1_|ogrzewanie|gniazdko|gn_|przed_wejsciem|balkon|pergola)')
              | list | count }}
       - name: "Światła piętro"
         unique_id: dom_swiatla_pietro

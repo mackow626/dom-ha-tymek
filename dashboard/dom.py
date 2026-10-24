@@ -19,23 +19,23 @@ ROOT = Path(__file__).resolve().parent.parent
 
 PARTER = [
     ("Salon", "mdi:sofa", [
-        ("switch.salon_1", "Światło 1"), ("switch.salon_2", "Światło 2"), ("switch.salon_3", "Światło 3"),
-        ("switch.salon_led3", "LED"),
-        ("switch.gniazdko_salon_1", "Gniazdko 1"), ("switch.gniazdko_salon_2", "Gniazdko 2"),
-        ("switch.gniazdko_salon_3", "Gniazdko 3"),
+        ("switch.salon_1", "Światło 1"), ("switch.salon_2", "Światło 2"),
+        ("switch.gn_salon_1", "Gniazdko 1"), ("switch.gn_salon_2", "Gniazdko 2"), ("switch.gn_salon_3", "Gniazdko 3"),
     ]),
     ("Kuchnia i jadalnia", "mdi:silverware-fork-knife", [
-        ("switch.kuchnia", "Kuchnia 1"), ("switch.kuchnia_2", "Kuchnia 2"), ("switch.jadalnia", "Jadalnia"),
+        ("switch.kuchnia_1", "Kuchnia 1"), ("switch.kuchnia_2", "Kuchnia 2"),
+        ("switch.jadalnia_1", "Jadalnia 1"), ("switch.jadalnia_2", "Jadalnia 2"),
     ]),
-    ("Siłownia", "mdi:dumbbell", [
-        ("switch.pokoj_1_1", "Światło 1"), ("switch.pokoj_1_2", "Światło 2"), ("switch.pokoj_1_3", "Światło 3"),
+    ("Gabinet", "mdi:desk", [
+        ("switch.gabinet_1", "Światło 1"), ("switch.gabinet_2", "Światło 2"),
     ]),
     ("Korytarz i wejście", "mdi:door", [
-        ("switch.wiatrolap", "Wiatrołap"), ("switch.korytarz", "Korytarz 1"), ("switch.korytarz_2", "Korytarz 2"),
+        ("switch.wiatrolap", "Wiatrołap"), ("switch.korytarz_1", "Korytarz"),
         ("switch.schody", "Schody"), ("switch.schowek", "Schowek"),
     ]),
-    ("WC i kotłownia", "mdi:toilet", [
-        ("switch.wc_2", "WC 1"), ("switch.wc_2_2", "WC 2"), ("switch.kotlownia", "Kotłownia"),
+    ("WC, łazienka i kotłownia", "mdi:toilet", [
+        ("switch.wc_1", "WC 1"), ("switch.wc_2", "WC 2"), ("switch.lazienka_2_2", "Łazienka"),
+        ("switch.kotlownia", "Kotłownia"),
     ]),
     ("Garaż", "mdi:garage", [
         ("switch.garaz_1", "Światło 1"), ("switch.garaz_2", "Światło 2"),
@@ -43,42 +43,37 @@ PARTER = [
 ]
 
 PIETRO = [
-    ("Maciek", "mdi:bed", [("switch.p1_pokoj_1_1", "Światło 1"), ("switch.p1_pokoj_1_2", "Światło 2"),
-                            ("switch.p1_pokoj_1_3", "Światło 3")]),
-    ("Aga", "mdi:bed", [("switch.p1_pokoj_2_1", "Światło 1"), ("switch.p1_pokoj_2_2", "Światło 2"),
-                            ("switch.p1_pokoj_2_3", "Światło 3"), ("switch.p1_pokoj_2_4", "Światło 4")]),
-    ("Emi", "mdi:bed", [("switch.p1_pokoj_3_1", "Światło 1"), ("switch.p1_pokoj_3_2", "Światło 2"),
-                            ("switch.p1_pokoj_3_3", "Światło 3")]),
-    ("Maja", "mdi:bed", [("switch.p1_pokoj_4_1", "Światło 1"), ("switch.p1_pokoj_4_2", "Światło 2"),
-                            ("switch.p1_pokoj_4_3", "Światło 3")]),
-    ("Łazienka sypialnia", "mdi:shower", [("switch.p1_lazienka_1_1", "Światło 1"), ("switch.p1_lazienka_1_2", "Światło 2"),
-                                  ("switch.p1_lazienka_1_3", "Światło 3")]),
-    ("Duża łazienka", "mdi:bathtub", [("switch.p1_lazienka_2_1", "Światło 1"), ("switch.p1_lazienka_2_2", "Światło 2"),
-                                   ("switch.p1_lazienka_2_3", "Światło 3"), ("switch.p1_lazienka_2_4", "Światło 4"),
-                                   ("switch.p1_lazienka_2_5", "Światło 5")]),
-    ("Korytarz piętro", "mdi:stairs", [("switch.p1_korytarz_1", "Korytarz 1"), ("switch.p1_korytarz_2", "Korytarz 2")]),
+    ("Jadzia", "mdi:bed", [("switch.p1_pokoj_1_1", "Światło 1"), ("switch.p1_pokoj_1_2", "Światło 2"),
+                           ("switch.p1_pokoj_1_3", "Światło 3")]),
+    ("Frycek", "mdi:bed", [("switch.p1_pokoj_2_1", "Światło 1"), ("switch.p1_pokoj_2_2", "Światło 2"),
+                           ("switch.p1_pokoj_2_3", "Światło 3")]),
+    ("Sypialnia", "mdi:bed-king", [("switch.p1_pokoj_3_1", "Światło 1"), ("switch.p1_pokoj_3_2", "Światło 2"),
+                                   ("switch.p1_pokoj_3_3", "Światło 3")]),
+    ("Kajtek", "mdi:bed", [("switch.p1_pokoj_4_1", "Światło 1"), ("switch.p1_pokoj_4_1_2", "Światło 2"),
+                           ("switch.p1_pokoj_4_3", "Światło 3")]),
+    ("Łazienka 1", "mdi:shower", [("switch.p1_lazienka_1_1", "Światło 1"), ("switch.p1_lazienka_1_2", "Światło 2")]),
+    ("Łazienka 2", "mdi:bathtub", [("switch.p1_lazienka_2_1", "Światło")]),
+    ("Korytarz piętro", "mdi:stairs", [("switch.p1_korytarz", "Korytarz")]),
 ]
 
 ZEWNATRZ = [
     ("Ogród i taras", "mdi:pine-tree", [
         ("switch.przed_wejsciem", "Przed wejściem"), ("switch.balkon", "Balkon"),
-        ("switch.pergola", "Pergola"), ("switch.pergola_led", "Pergola LED"),
-        ("switch.gniazdko_ogrod", "Gniazdko ogród"),
+        ("switch.pergola", "Pergola"), ("switch.gn_zew", "Gniazdko zewn."),
     ]),
 ]
 
 ROLETY = [
-    ("cover.roleta_salon", "Salon"), ("cover.roleta_kuchnia", "Kuchnia"), ("cover.roleta_gabinet", "Gabinet"),
-    ("cover.roleta_pokoj_3", "Emi"), ("cover.roleta_pokoj_4", "Maja"), ("cover.roleta_pergola", "Pergola"),
+    ("cover.roleta_p1_pokoj_1", "Jadzia"), ("cover.roleta_p1_pokoj_2", "Frycek"), ("cover.pergola", "Pergola"),
 ]
 
 # (pokój, termostat, czujnik temperatury, przekaźnik grzania)
 OGRZEWANIE_PARTER = [
-    ("Salon", "salon"), ("Kuchnia", "kuchnia"), ("Siłownia", "pokoj"), ("WC", "wc"), ("Wiatrołap", "wiatrolap"),
+    ("Salon", "salon"), ("Kuchnia", "kuchnia"), ("Pokój 1", "pokoj_1"), ("WC", "wc"), ("Wiatrołap", "wiatrolap"),
 ]
 OGRZEWANIE_PIETRO = [
-    ("Maciek", "p1_pokoj_1"), ("Aga", "p1_pokoj_2"), ("Emi", "p1_pokoj_3"), ("Maja", "p1_pokoj_4"),
-    ("Łazienka sypialnia", "p1_lazienka_1"), ("Duża łazienka", "p1_lazienka_2"),
+    ("Jadzia", "p1_pokoj_1"), ("Frycek", "p1_pokoj_2"), ("Sypialnia", "p1_pokoj_3"), ("Kajtek", "p1_pokoj_4"),
+    ("Łazienka 1", "p1_lazienka_1"), ("Łazienka 2", "p1_lazienka_2"),
 ]
 
 ALARMY = [
@@ -186,7 +181,7 @@ def all_switches(rooms):
     return [e for _, _, items in rooms for e, _ in items]
 
 
-LIGHTS = [e for e in all_switches(PARTER + PIETRO + ZEWNATRZ) if "gniazdko" not in e]
+LIGHTS = [e for e in all_switches(PARTER + PIETRO + ZEWNATRZ) if "gniazdko" not in e and ".gn_" not in e]
 
 
 # ---------- zakładki ----------
@@ -199,7 +194,7 @@ def view_przeglad():
         "badges": alarm_badges + [
             badge("binary_sensor.brama_otwarta", "Brama"),
             badge("sensor.dom_temperatura_salon", "Salon"),
-            badge("sensor.dom_temperatura_p1_pokoj_1", "Maciek"),
+            badge("sensor.dom_temperatura_p1_pokoj_1", "Jadzia"),
             badge("sensor.dom_ls", "Światło"),
         ],
         "sections": [
@@ -353,11 +348,6 @@ def view_historia():
                 {"type": "logbook", "title": "Ostatnie zdarzenia", "hours_to_show": 24,
                  "target": {"entity_id": ["cover.brama", "binary_sensor.brama_otwarta",
                                           *[e for e, _ in ALARMY]]}},
-                {"type": "entities", "title": "Drukarka", "entities": [
-                    {"entity": "sensor.dom_hp_laserjet_mfp_m129_m134", "name": "Stan"},
-                    {"entity": "sensor.dom_hp_laserjet_mfp_m129_m134_black_cartridge_hp_cf217a", "name": "Toner"},
-                    {"entity": "sensor.dom_hp_laserjet_mfp_m129_m134_imaging_drum_hp_cf219a", "name": "Bęben"},
-                ]},
             ]},
         ],
     }
